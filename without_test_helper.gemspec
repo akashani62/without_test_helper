@@ -2,7 +2,7 @@ $:.push File.expand_path("../lib", __FILE__)
 
 # Describe your gem and declare its dependencies:
 Gem::Specification.new do |s|
-  s.name        = "mvi-billing"
+  s.name        = "without_test_helper"
   s.version     = "0.0.1"
   s.authors     = ["Without Software (James Roscoe)"]
   s.email       = ["james@withoutsoftware.com"]
