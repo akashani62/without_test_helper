@@ -78,7 +78,7 @@ module Without
         ([nil] + role_names).each do |login_method|
           test "#{test_name} #{login_method}" do
             if setup_block = procs[:setup]
-              instance_eval &setup_block(login_method)
+              instance_eval &setup_block, login_method
             else
               send("login_as_#{login_method}") if login_method
             end
