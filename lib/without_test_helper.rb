@@ -77,8 +77,8 @@ module Without
         (show_request_all_docs; assert false) unless procs
         ([nil] + role_names).each do |login_method|
           test "#{test_name} #{login_method}" do
-            if procs[:setup]
-              procs[:setup].call(login_method)
+            if setup_block = procs[:setup]
+              instance_eval &setup_block(login_method)
             else
               send("login_as_#{login_method}") if login_method
             end
