@@ -6,6 +6,21 @@ Multi-role controller tests and other helpful assertions
 
 Add without_test_helper to your Gemfile and run <pre>bundle install</pre>
 
+You need to make two additions to <pre>test/test_helper.rb</pre>:
+
+    ENV['RAILS_ENV'] ||= 'test'
+    require File.expand_path('../../config/environment', __FILE__)
+    require 'rails/test_help'
+
+    class ActiveSupport::TestCase
+      include Without::TestCase      # add this line
+      ...
+    end
+
+    class ActionController::TestCase # add this class
+      include Without::Controller
+    end
+
 ## Additional Assertions
 
 ### assert_invalid_because_of
@@ -134,7 +149,7 @@ Pass an array of expected attributes. A symbol indicates an expected name. A has
 
 ### Multi-role controller test helpers
 
-For each HTTP verb of GET, POST, PUT, DELETE, create a test for each role you define.
+For each HTTP verb of GET, POST, PUT, DELETE create a test for each role you define.
 
     class UserTest < ActionController::TestCase
       include WithoutTestHelper
@@ -165,10 +180,11 @@ For each HTTP verb of GET, POST, PUT, DELETE, create a test for each role you de
           case role_name
           when :sysadmin then assert_response :success
           else assert_require_login
+          end
         end
       end
     end
 
 Analogous post_test, put_test, delete_test exist as well.
 
-Perform your assertions inside the assertions block. One test will be created for when no user is logged in and then one for each role. The setup code will be run then the controller request will be performed (inside an assert_difference block if you include difference values) and finally the assertions block will be executed. All blocks are executed by the test itself so you have access to all the usual assertions plus the @controller object.
+Perform your assertions inside the assertions block. One test will be created for when no user is logged in and then one for each role. The setup code will be run then the controller request will be performed (inside an assert_difference block if you include difference values) and finally the assertions block will be executed. All blocks are executed by the test itself so you have access to all the usual assertions plus the @controller object. If you are testing JS responses (where your paramters include :format => :js) then the xhr method will automatically be called to keep your tests from failing due to cross-site errors.

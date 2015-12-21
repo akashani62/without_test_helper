@@ -135,7 +135,11 @@ module Without
 
     def execute_request(login_method, verb, action, params)
       begin
-        send verb, action, params
+        if params[:format].try(:to_sym) == :js
+          xhr verb, action, params
+        else
+          send verb, action, params
+        end
       rescue Exception => e
         puts "Exception encountered during request for #{login_method || 'no role'}: #{e.message}"
         puts e.backtrace
