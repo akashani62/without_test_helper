@@ -106,7 +106,7 @@ Assertion will fail if the model has not been destroyed.
       assert_difference('MyModel.count', 0) do
         put :update, id: model.to_param, my_model: new_attributes
       end
-      assert_attributes(model, new_attributes)
+      assert_attributes(new_attributes, model)
     end
 
 Typically used to test create and update controller actions to ensure attributes are set appropriately. Can merge in additional constant values if it is expected that some attributes are to be ignored, eg: assert_attributes model, new_attributes.merge(attribute2: old_value)
@@ -138,7 +138,7 @@ Confirm the format of a JSON response. Typically used to ensure API output inclu
     test "api returns correct json" do
       model = my_models(:one)
       get :show, id: model, format: :json
-      assert_json response.body, EXPECTED_JSON
+      assert_json EXPECTED_JSON, response.body
     end
 
 Assertion will fail if the format of the JSON response is not as expected.

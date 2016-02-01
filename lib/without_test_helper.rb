@@ -37,11 +37,11 @@ module Without
       objects.each {|object| assert_raises(ActiveRecord::RecordNotFound) { object.reload } }
     end
 
-    def assert_attributes(model, expected_attributes)
+    def assert_attributes(expected_attributes, model)
       expected_attributes.each {|k, v| assert_equal v, model.send(k) }
     end
 
-    def assert_json(obj, required_attributes)
+    def assert_json(required_attributes, obj)
       obj = JSON.parse obj if obj.is_a? String
       required_attributes.each do |attrib|
         case
