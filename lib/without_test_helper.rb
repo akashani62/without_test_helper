@@ -23,7 +23,12 @@ module Without
 
     def assert_matching_arrays(reference_array, test_array, failure_message = 'arrays did not match')
       assert_equal reference_array.length, test_array.length, failure_message
-      reference_array.each_with_index {|o, i| assert_equal o, test_array[i], "#{failure_message}\n#{reference_array} expected but was\n#{test_array}\nmismatch at index #{i}" }
+      reference_array.each_with_index {|o, i| assert_equal o, test_array[i], "#{failure_message}\n#{reference_array.inspect} expected but was\n#{test_array.inspect}\nmismatch at index #{i}" }
+    end
+
+    def assert_matching_arrays_unsorted(reference_array, test_array, failure_message = 'arrays did not match')
+      assert_equal reference_array.length, test_array.length, failure_message
+      reference_array.each {|o| assert test_array.include?(o), "#{failure_message}\n#{reference_array.inspect} expected but was\n#{test_array.inspect}\nmissing #{o.inspect}" }
     end
 
     def assert_scopes_out(scoped_class, obj)
