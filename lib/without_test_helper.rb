@@ -76,7 +76,7 @@ module Without
   end
 
   module Controller
-    module WithoutClassMethods
+    module ClassMethods
       def request_all(test_name, verb, action, params = {})
         procs = block_given? ? yield : nil
         (show_request_all_docs; assert false) unless procs
@@ -119,7 +119,7 @@ module Without
     end
 
     def self.included(klass)
-      klass.extend WithoutClassMethods
+      klass.extend ClassMethods
     end
 
     def assert_require_login(message = nil)
