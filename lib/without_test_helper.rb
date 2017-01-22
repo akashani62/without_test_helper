@@ -145,7 +145,7 @@ module Without
         else
           send verb, action, params
         end
-      rescue Exception => e
+      rescue StandardError => e
         puts "Exception encountered during request for #{login_method || 'no role'}: #{e.message}"
         puts e.backtrace
         raise e
