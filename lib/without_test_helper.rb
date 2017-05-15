@@ -141,10 +141,8 @@ module Without
     def execute_request(login_method, verb, action, params)
       begin
         if params[:format].try(:to_sym) == :js
-          xhr verb, action, params
+          xhr verb, action, params: params
         else
-          require 'awesome_print'
-
           send verb, action, params: params
         end
       rescue StandardError => e
