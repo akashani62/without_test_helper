@@ -54,11 +54,11 @@ module Without
           when attrib.is_a?(Hash) then
             attrib.each do |key, value|
               (key.is_a?(Array) ? obj.map{|el| el[key.first.to_s]} : [obj[key.to_s]]).each do |o|
-                assert_json(o, value)
+                assert_json(value, o)
               end
             end
           when attrib.is_a?(Array) then
-            obj.each {|o| assert_json(o, attrib) }
+            obj.each {|o| assert_json(attrib, o) }
           else assert obj && obj.keys.include?(attrib.to_s), "expected element #{attrib} not found in #{obj.inspect}"
         end
       end
