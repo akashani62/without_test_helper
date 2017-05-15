@@ -143,7 +143,9 @@ module Without
         if params[:format].try(:to_sym) == :js
           xhr verb, action, params
         else
-          send verb, action, params
+          require 'awesome_print'
+
+          send verb, action, params: params
         end
       rescue StandardError => e
         puts "Exception encountered during request for #{login_method || 'no role'}: #{e.message}"

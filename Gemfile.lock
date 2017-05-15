@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    without_test_helper (0.0.2)
+    without_test_helper (0.0.3)
 
 GEM
   remote: http://rubygems.org/
