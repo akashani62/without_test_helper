@@ -96,7 +96,7 @@ module Without
                 send execute_method, login_method, verb, action, params
               end
             else
-              send :execute_method, login_method, verb, action, params
+              send execute_method, login_method, verb, action, params
             end
             assertions = if assertions_block = procs[:assertions]
               instance_exec login_method, &assertions_block
