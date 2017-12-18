@@ -90,12 +90,13 @@ module Without
             params = if params_block = procs[:params]
               instance_exec &params_block
             end || {}
+            execute_method = procs[:execute_method] || :execute_request
             if procs[:difference]
               assert_difference(procs[:difference][:expr], procs[:difference][:difference].try(:[], login_method || :none) || 0, login_method || :none) do
-                execute_request login_method, verb, action, params
+                send execute_method, login_method, verb, action, params
               end
             else
-              execute_request login_method, verb, action, params
+              send execute_method, login_method, verb, action, params
             end
             assertions = if assertions_block = procs[:assertions]
               instance_exec login_method, &assertions_block
