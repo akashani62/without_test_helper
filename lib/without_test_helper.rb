@@ -141,10 +141,17 @@ module Without
 
     def execute_request(login_method, verb, action, params)
       begin
-        if params[:format].try(:to_sym) == :js
-          xhr verb, action, params: params
+        _parameters = params.dup
+        _params = _parameters.delete(:params)
+        if _parameters.empty?
+          _parameters = _params
         else
-          send verb, action, params: params
+          _parameters = _parameters.merge(params: _params)
+        end
+        if params[:format].try(:to_sym) == :js
+          xhr verb, action, _parameters
+        else
+          send verb, action, _parameters
         end
       rescue StandardError => e
         puts "Exception encountered during request for #{login_method || 'no role'}: #{e.message}"
