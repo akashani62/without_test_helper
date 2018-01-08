@@ -142,15 +142,30 @@ module Without
     def execute_request(login_method, verb, action, params)
       begin
         _parameters = params.dup
-        _params = _parameters.delete(:params)
+        _params = if _parameters.delete(:params)
+        else
+          {}
+        end
+        puts "\n\n _params: #{_params.inspect}"
         if _parameters.empty?
+=begin
+  # TODO Clean putss
+=end
           _parameters = _params
+          puts "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n if _parameters: #{_parameters.inspect}"
+
         else
           _parameters = _parameters.merge(params: _params)
+          puts "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n else _parameters: #{_parameters.inspect}"
+
         end
         if params[:format].try(:to_sym) == :js
+          puts "\n js "
+
           xhr verb, action, _parameters
         else
+          puts "\n no js "
+
           send verb, action, _parameters
         end
       rescue StandardError => e
