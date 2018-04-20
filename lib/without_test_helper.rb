@@ -92,7 +92,9 @@ module Without
             end || {}
             execute_method = procs[:execute_method] || :execute_request
             if procs[:difference]
-              assert_difference(procs[:difference][:expr], procs[:difference][:difference].try(:[], login_method || :none) || 0, login_method || :none) do
+              difference = procs[:difference][:difference].try(:[], login_method || :none) || 0
+              difference = instance_eval(difference) if difference.is_a?(String)
+              assert_difference(procs[:difference][:expr], difference, login_method || :none) do
                 send execute_method, login_method, verb, action, params
               end
             else
